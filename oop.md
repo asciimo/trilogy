@@ -6,10 +6,10 @@ Audience
 ---
 This lesson is intended for students who have some experience with fundamental
 procedural programming concepts, particularly **variables**, **scope**, **data
-structures** and **functions**. Students should be confident in their ability to
-write useful programs, and eager to learn new tools and techniques for building
-more complex applications and systems. Familiarity with JavaScript is useful,
-but not necessary.
+structures** and **functions**. Students should be confident in their ability
+to write useful programs, and eager to learn new tools and techniques for
+building more complex applications and systems. Familiarity with JavaScript is
+useful, but not necessary.
 
 Lesson Materials
 ---
@@ -38,7 +38,7 @@ At the end of this section, students will:
   - understand that **classes** are blueprints that can create
       **object** instances.
   - be able to declare **classes**
-  - instantiate object instances 
+  - **instantiate** object instances 
 
 #### Tips
 Throughout this lesson, we will be alternating instruction with practice to
@@ -91,8 +91,10 @@ By describing the class of object known as "a pen" in abstract terms, we can
 easily describe two wildly different instances such as a disposable ballpoint
 pen and an absurdly expensive Montblanc fountain pen.
 
-We can even model intangible things, such as Web pages, calendar reminders,
-ocean temperature readings, and public transportation ridership trends. 
+We can even model intangible things using OOP, such as Web pages, calendar
+reminders, ocean temperature readings, and public transportation ridership
+trends. We'll focus on real-world objects for now, because they're familiar and
+easier to talk about. 
 
 ***Ask the class***
 > What are some practical applications of modeling things and concepts as
@@ -154,23 +156,24 @@ class has a name: `Robot`.
 
 But what do we do with a class? A class is an abstract blueprint for creating
 concrete **instances** of itself, called **objects**. This is where OOP gets its
-name. In order to create a blue, dancing `Robot` named Philip, we must first
+name. In order to create a blue, dancing `Robot` named Marty, we must first
 have a blueprint, or **class**, that defines a `Robot`'s attributes and
 behavior. 
 
-Even though our `Robot` blueprint is bare-bones, we can already instantiate a `Robot`
-object. Let's make a new `Robot` instance in the browser console:
+Even though our `Robot` blueprint is bare-bones, we can already
+**instantiate**, or create an instance of, a `Robot` object. Let's make a new
+`Robot` instance in the browser console:
 
 ```javascript
 const marty = new Robot();
-marty
 ```
 
 Here, we are assigning a new instance of the `Robot` class to the variable
 `marty`. There are two important parts of the JavaScript syntax for
 instantiating an object:
-1. The `new` keyword, which tells the interpreter that we are instantiating a
-   class. (This is common in many other languages that support OOP.)
+1. The `new` keyword, which tells the interpreter that we are creating a new
+   instance of the `Robot` class. This is common in many other languages that
+   support OOP.
 2. The parentheses following the class name `Robot`, which imply that we are
    actually calling a function.
 
@@ -178,13 +181,18 @@ Let's talk about those parentheses. When we create an object from a class,
 JavaScript is quietly calling a function built in to all classes:
 `constructor()`. Even though we didn't declare this function, it is automatically
 added to every class, and it's the first function--in OOP terms, a
-**method**--that gets called when we instantiate an object. Let's look at the
-subtle difference between the `Robot` class and the `marty` instance in the
-console:
+**method**--that gets called when we instantiate an object. We'll talk more
+about the usefulness of `constructor()` shortly.
+
+Let's look at the subtle difference between the `Robot` class and the `marty`
+instance in the console:
 
 ![Robot class in the JavaScript console](img/2_robot_instance_in_console.png)
 
-The console identifies the `Robot` class as the JavaScript type `function`, but it identifies `marty` is the JavaScript type `Object`. If we expand `marty` by clicking on the arrow, we see that that he is empty. It will be our job to give him some **properties** and **methods**.
+The console identifies the `Robot` class as the JavaScript type `function`, but
+it identifies `marty` is the JavaScript type `Object`. If we expand `marty` by
+clicking on the arrow, we see that that he is empty. It will be our job to give
+him some **properties** and **methods**.
 
 Properties and Methods
 ---
@@ -193,26 +201,125 @@ Properties and Methods
 
 #### Goals
 At the end of this section, students will:
+  - understand how the default **constructor** method initializes an object
+  - understand that `this` is an interface to the **scope** of an object  
   - declare **properties** and **methods** in a **class**
-  - instantiate different **objects** from the same class
+  - be able to override the default constructor to declare object properties
+  - instantiate different **objects** from a class
   - call **methods** on an object instance.
 
 #### Tips
 While there are some JavaScript idiosyncrasies that can't be avoided while
 interacting with classes, don't spend too much time addressing them.  Remind
-students that these are general concepts across all OOP-friendly languages, and
-the particulars of JavaScript OOP can be explored on their own time.
+students that these are learning general concepts that apply to all
+OOP-friendly languages, and the particulars of JavaScript OOP can be explored
+on their own time.
 
 ### Teach to the students
 
 *Attributes* such as name, color and size, are defined using variables called
 **properties**.
 
-*Behaviors*, such as speak, move, and destroy are defined using functions  called **methods**. 
+*Behaviors*, such as speak, move, and destroy are defined using functions
+called **methods**. 
 
-Let's flesh out the abstract notion of a `Robot` by adding some **properties**. We talked about the special `constructor()` method because it allows us to declare properties in a class. Every robot should have a name, so let's start by declaring a `name` property in the `Robot` class. Refresh your browser to clear out the `Robot` we declared earlier, and let's redeclare it as follow: 
+Let's flesh out the abstract notion of a `Robot` by adding some **properties**.
+Remember that `constructor()` is automatically called when a new object is
+instantiated from a class. This method is completely customizable, giving
+us an opportunity to do some work when the object is initialized. We'll
+use `constructor()` to define properties on a `Robot` instance.
+
+@todo clean up language about objects and instances for consistency. A class defines an object, and we create instances of that object.
+
+Every robot should have a name, so let's start by declaring a `name` property
+in the `Robot` class. Refresh your browser to clear out the `Robot` we declared
+earlier, and let's redeclare it as follow: 
+
+```javascript
+class Robot {
+  constructor() {
+    this.name = 'Marty';
+  }
+}
+```
+
+@todo update screenshot to only show console interaction, not class definition
 
 ![Robot class in the JavaScript console](img/3_robot_name_property_in_console.png)
+
+In JavaScript, class properties are declared using the keyword `this`. `this`
+refers to the **scope**, or context, of the object described by the class. We
+can reference `this` from anywhere in a class, and have access to the
+specific properties and methods of a particular object
+instance.  This is common in many languages that support OOP, but it can get a
+little tricky in JavaScript because `this` can be used in other contexts
+outside of classes. For now, we only need to remember that we will use
+`this` when accessing properties and methods within in a class.
+
+Let's break down what happened in the above example:
+
+1. We create a new `Robot` instance by calling `new Robot()`, and assign it to
+   the `marty` variable
+2. `constructor()` is automatically called, assigning the string value `Marty`
+   to the instance using the `this` keyword
+3. We type `marty` into the console, and it displays the object instance with
+   the `name` property set to `Marty`.
+
+***Ask the class***
+> Does this make sense?
+
+    This is a good time to sync up with the class to make sure everyone is on the same page. 
+
+Now we're going to interact with Marty. We're going to read his name by
+directly referencing the `name` property on the object instance using the **dot operator**:
+
+![Robot class in the JavaScript console](img/4_robot_read_name_property_in_console.png)
+
+The console displays the value of the `name` property. It is the string, "Marty".
+
+Now we have a class that defines `Robot` objects, and it creates instances with the name "Marty".
+
+***Ask the class***
+> What if we want to create another robot named Phyllis? 
+
+    Encourage students to puzzle this out. One solution might be to create a new
+    class, `PhyllisRobot`, where `constructor()` sets the name to "Phyllis". Another
+    might be to modify the `Robot` class to set the name to "Phyllis" instead of
+    "Marty". If only there were a way to set the robot name at the time of 
+    object instantiation...
+
+A very useful feature of `constructor()` is that it can take arguments passed
+to the class when a new object instance is created. This allows us to reuse the
+same class to instantiate objects with different properties. Let's use this
+feature to pass a robot's name into the `Robot` class when we create a new
+object instance. First, we will modify `constructor()` to expect a `name`
+parameter. Refresh your browser and enter the following into the console:
+
+```javascript
+class Robot {
+  constructor(name) {
+    this.name = name;
+  }
+}
+```
+
+To create a robot name Phyllis, we can simply...
+
+```javascript
+const phyllis = new Robot('Phyllis');
+```
+
+We can see that our new `Robot` instance is named Phyllis.
+
+![Robot class in the JavaScript console](img/5_robot_read_name_phyllis_in_console.png)
+
+Feel free to spend a minute creating more robots with different names!
+
+
+
+
+
+
 
 
 Backlog
@@ -225,7 +332,8 @@ Backlog
 
 
 ***Ask the class***
-> Can you think of a real-world object that might be difficult to express using a **class**? Which **properites** and **methods** seem difficult to model? 
+> Can you think of a real-world object that might be difficult to express using
+> a **class**? Which **properites** and **methods** seem difficult to model? 
 
     Try to model some of the students' suggestions with appropriate properties
     and methods. Hopefully you will find an opportunity where some forthcoming
