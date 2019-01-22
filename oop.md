@@ -21,12 +21,12 @@ Overview
 In this lesson, we will introduce students to the important concepts of Object
 Oriented programming.  We will start by describing how **classes** enable
 programmers to model real-world objects in software, and enforce this idea by
-creating a class and **object** instances in a browser's JavaScript console. We
-will then take students deeper into the ideas of **encapsulation**,
-**inheritance**, and **polymorphism**, with interactive JavaScript exercises
-along the way. Time permitting, we will conclude with a discussion of some
-problematic aspects of OOP such as **multiple inheritance**, and how it might be
-avoided with **composition**.
+creating a class and **object instances** in a browser's JavaScript console. We
+will then explain how **properties** (variables) and **methods** (functions)
+give object instances their attributes and behavior. We'll cover the power of
+the special`constructor()` method, and the value of **accessors** to read and
+mutate object instance properties.
+
 
 Classes
 ---
@@ -248,34 +248,51 @@ class Robot {
 ![Robot class in the JavaScript console](img/3_robot_name_property_in_console.png)
 
 In JavaScript, class properties are declared using the keyword `this`. `this`
-refers to the **scope**, or context, of the object described by the class. We
-can reference `this` from anywhere in a class, and have access to the
-specific properties and methods of a particular object
-instance.  This is common in many languages that support OOP, but it can get a
-little tricky in JavaScript because `this` can be used in other contexts
-outside of classes. For now, we only need to remember that we will use
-`this` when accessing properties and methods within in a class.
+refers to the **scope**, or context, of the object described by the class.
+That dot between `this` and `name` is aptly called the **dot operator**. It
+provides access to an object instance's properties and methods. In this case,
+`this` is an alias for the current object instance. You can think of it as an
+object's instance's notion of itself. `this.name = 'Marty'` is analogous an
+object instance saying "my name is Marty".
+
+We can reference `this` from anywhere in a class, and have access to the
+specific properties and methods of a particular object when it is instantiated.
+`this` is common in many languages that support OOP, but it can get a little
+tricky in JavaScript because `this` can be used in other contexts outside of
+OOP. For now, we only need to remember that we will use `this` when referencing
+properties and methods within in a class.
 
 Let's break down what happened in the above example:
 
-1. We create a new `Robot` instance by calling `new Robot()`, and assign it to
+1. We created a new `Robot` instance by calling `new Robot()`, and assigned it to
    the `marty` variable
-2. `constructor()` is automatically called, assigning the string value `Marty`
-   to the instance using the `this` keyword
-3. We type `marty` into the console, and it displays the object instance with
+2. `constructor()` was automatically called, assigning the string value `Marty`
+   to the instance's `name` property using the `this` keyword
+3. We typed `marty` into the console, and it displayed the object instance with
    the `name` property set to `Marty`.
 
 ***Ask the class***
 > Does this make sense?
 
-    This is a good time to sync up with the class to make sure everyone is on the same page. 
+    This is a good time to sync up with the class to make sure everyone is on
+    the same page. `this` may be problematic. Enforce the idea that `this` is
+    synonymous with "my". It's abstract within the class, but it will be bound to
+    the scope of object instances, as we'll demonstrate in a moment.
 
 Now we're going to interact with Marty. We're going to read his name by
-directly referencing the `name` property on the object instance using the **dot operator**:
+directly referencing the `name` property on the object instance using the **dot
+operator**:
 
 ![Robot class in the JavaScript console](img/4_robot_read_name_property_in_console.png)
 
 The console displays the value of the `name` property. It is the string, "Marty".
+
+***Ask the class***
+> Why didn't we use `this` when accessing Marty's name?
+
+    Because `this` is abstract within the class. When an object is instantiated, its
+    properties are concrete, and can be accessed by using the dot operator on the 
+    specific instance.
 
 Now we have a class that defines `Robot` objects, and it creates instances with the name "Marty".
 
@@ -338,4 +355,15 @@ Backlog
     Try to model some of the students' suggestions with appropriate properties
     and methods. Hopefully you will find an opportunity where some forthcoming
     concepts will help, providing a segue into the next section.
+
+
+Topics for further learning
+---
+  - encapsulation
+  - inheritance
+  - polymorphism
+  - multiple inheritance
+  - composition
+  - interfaces
+  - factory pattern
 
