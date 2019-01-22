@@ -22,12 +22,12 @@ Table of Contents
 
 Audience
 ---
-This lesson is intended for students who have some experience with fundamental
-procedural programming concepts, particularly **variables**, **scope**, **data
-structures** and **functions**. Students should be confident in their ability
-to write useful programs, and eager to learn new tools and techniques for
-building more complex applications and systems. Familiarity with JavaScript is
-useful, but not necessary.
+This lesson is intended for beginning students who have some experience with
+fundamental procedural programming concepts, particularly **variables**,
+**scope**, **data structures** and **functions**. Students should be confident
+in their ability to write useful programs, and eager to learn new tools and
+techniques for building more complex applications and systems. Familiarity with
+JavaScript is useful, but not necessary.
 
 Lesson Materials
 ---
