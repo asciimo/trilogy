@@ -154,10 +154,10 @@ will quickly descend into a puzzling JavaScript rabbit hole. Let's not do that
 right now. The important thing to note is that the interpreter knows that this
 class has a name: `Robot`. 
 
-But what do we do with a class? A class is an abstract blueprint for creating
-concrete **instances** of itself, called **objects**. This is where OOP gets its
+But what do we do with a class? A class is an abstract **object** blueprint
+that can create concrete **object instances**.  This is where OOP gets its
 name. In order to create a blue, dancing `Robot` named Marty, we must first
-have a blueprint, or **class**, that defines a `Robot`'s attributes and
+have a blueprint, or **class**, that defines a `Robot` object's attributes and
 behavior. 
 
 Even though our `Robot` blueprint is bare-bones, we can already
@@ -180,7 +180,7 @@ instantiating an object:
 Let's talk about those parentheses. When we create an object from a class,
 JavaScript is quietly calling a function built in to all classes:
 `constructor()`. Even though we didn't declare this function, it is automatically
-added to every class, and it's the first function--in OOP terms, a
+added to every class, and it's the first function--in OOP terms, the first 
 **method**--that gets called when we instantiate an object. We'll talk more
 about the usefulness of `constructor()` shortly.
 
@@ -191,8 +191,8 @@ instance in the console:
 
 The console identifies the `Robot` class as the JavaScript type `function`, but
 it identifies `marty` is the JavaScript type `Object`. If we expand `marty` by
-clicking on the arrow, we see that that he is empty. It will be our job to give
-him some **properties** and **methods**.
+clicking on the arrow, we see that that he is empty. It will be our job to bring
+him to life with **properties** and **methods**.
 
 Properties and Methods
 ---
@@ -201,8 +201,8 @@ Properties and Methods
 
 #### Goals
 At the end of this section, students will:
-  - understand how the default **constructor** method initializes an object
-  - understand that `this` is an interface to the **scope** of an object  
+  - understand how the default **constructor** method initializes an object instance
+  - understand that `this` is an interface to the **scope** of an object instance 
   - declare **properties** and **methods** in a **class**
   - be able to override the default constructor to declare object properties
   - instantiate different **objects** from a class
@@ -211,7 +211,7 @@ At the end of this section, students will:
 #### Tips
 While there are some JavaScript idiosyncrasies that can't be avoided while
 interacting with classes, don't spend too much time addressing them.  Remind
-students that these are learning general concepts that apply to all
+students that we are learning general concepts that apply to all
 OOP-friendly languages, and the particulars of JavaScript OOP can be explored
 on their own time.
 
@@ -225,11 +225,9 @@ called **methods**.
 
 Let's flesh out the abstract notion of a `Robot` by adding some **properties**.
 Remember that `constructor()` is automatically called when a new object is
-instantiated from a class. This method is completely customizable, giving
-us an opportunity to do some work when the object is initialized. We'll
-use `constructor()` to define properties on a `Robot` instance.
-
-@todo clean up language about objects and instances for consistency. A class defines an object, and we create instances of that object.
+instantiated from a class. This method is completely customizable, giving us an
+opportunity to do some work when the object is initialized. We'll use
+`constructor()` to define properties on a `Robot` instance.
 
 Every robot should have a name, so let's start by declaring a `name` property
 in the `Robot` class. Refresh your browser to clear out the `Robot` we declared
@@ -257,7 +255,7 @@ object instance saying "my name is Marty".
 
 We can reference `this` from anywhere in a class, and have access to the
 specific properties and methods of a particular object when it is instantiated.
-`this` is common in many languages that support OOP, but it can get a little
+`this` is common in many programming languages that support OOP, but it can get a little
 tricky in JavaScript because `this` can be used in other contexts outside of
 OOP. For now, we only need to remember that we will use `this` when referencing
 properties and methods within in a class.
@@ -265,9 +263,9 @@ properties and methods within in a class.
 Let's break down what happened in the above example:
 
 1. We created a new `Robot` instance by calling `new Robot()`, and assigned it to
-   the `marty` variable
+   the `marty` variable.
 2. `constructor()` was automatically called, assigning the string value `Marty`
-   to the instance's `name` property using the `this` keyword
+   to the instance's `name` property using the `this` keyword and the dot operator.
 3. We typed `marty` into the console, and it displayed the object instance with
    the `name` property set to `Marty`.
 
@@ -280,8 +278,8 @@ Let's break down what happened in the above example:
     the scope of object instances, as we'll demonstrate in a moment.
 
 Now we're going to interact with Marty. We're going to read his name by
-directly referencing the `name` property on the object instance using the **dot
-operator**:
+directly referencing the `name` property on the object instance using the dot
+operator:
 
 ![Robot class in the JavaScript console](img/4_robot_read_name_property_in_console.png)
 
@@ -292,9 +290,10 @@ The console displays the value of the `name` property. It is the string, "Marty"
 
     Because `this` is abstract within the class. When an object is instantiated, its
     properties are concrete, and can be accessed by using the dot operator on the 
-    specific instance.
+    specific object instance.
 
-Now we have a class that defines `Robot` objects, and it creates instances with the name "Marty".
+Now we have a class that defines `Robot` objects, and it creates instances with
+the name "Marty". So far, it only creates robots named Marty.
 
 ***Ask the class***
 > What if we want to create another robot named Phyllis? 
@@ -310,7 +309,7 @@ to the class when a new object instance is created. This allows us to reuse the
 same class to instantiate objects with different properties. Let's use this
 feature to pass a robot's name into the `Robot` class when we create a new
 object instance. First, we will modify `constructor()` to expect a `name`
-parameter. Refresh your browser and enter the following into the console:
+argument. Refresh your browser and enter the following into the console:
 
 ```javascript
 class Robot {
@@ -332,20 +331,73 @@ We can see that our new `Robot` instance is named Phyllis.
 
 Feel free to spend a minute creating more robots with different names!
 
+We can all agree that the most useful robots in the world do more than simply possess name.
 
+***Ask the class***
+> What are some other attributes that might belong to a robot?
 
+    The sky's the limit on this one. Obvious properties include height, weight,
+    speed, fuel, color, purpose, location, serial number...
 
+Let's add some of these properties to our `Robot` class. For now, we can hard-code the property values in the constructor as we initially did for `name` (don't forget to refresh your browser):
 
+```javascript
+class Robot {
+  constructor(name) {
+    this.name = name;
+    this.color = 'blue';
+    this.purpose = 'entertain';
+  }
+}
+```
+
+Let's see what Marty looks like now:
+
+```javascript
+const marty = new Robot('Marty');
+``` 
+
+![Robot class in the JavaScript console](img/6_robot_marty_with_properties_in_console.png)
+
+Marty is really coming to life. And so is Phyllis:
+
+```javascript
+const phyllis = new Robot('Phyllis');
+```
+
+![Robot class in the JavaScript console](img/7_robot_marty_with_properties_in_console.png)
+
+As it stands, we can create an army of differently named blue, dancing robots. Awesome for sure, but still limiting.  What if we want a squad that sings?
+
+***Ask the class***
+> How can we assign different values to these new properties when we instantiate a `Robot`? 
+
+    Students should be able to solve this problem by paramaterizing the other attributes
+
+If we parameterize the new properties, our `constructor()` might look like this:
+
+```javascript
+class Robot {
+  constructor(name, color, purpose) {
+    this.name = name;
+    this.color = color;
+    this.purpose = purpose;
+  }
+}
+```
+Now we can create a rich multitude of robots with varying colors and purposes. But we will soon grow tired of this limited set of robot properties, and want to add more. We might add several dozen or even hundreds more properties. If we parameterize all of these properties in the constructor it will become unwieldy, as we will have to remember the order of arguments every time we instantiate a robot.
+
+Furthermore, what if we want to modify a robot that already exists? Right now, we can't. We'd have to destroy it and create a new one with different properties. Fortunately, there is a way we can more gracefully provision each robot and even alter it after it has been instantiated...
+
+Accessors aka "setters" and "getters"
+---
+
+    
 
 
 
 Backlog
 ===
-***Ask the class***
-> What are some other attributes that might belong to a robot?
-
-    The sky's the limit on this one. Obvious properties include name, height, weight,
-    speed, fuel, color, gender...
 
 
 ***Ask the class***
@@ -359,8 +411,8 @@ Backlog
 
 Topics for further learning
 ---
-  - encapsulation
   - inheritance
+  - encapsulation
   - polymorphism
   - multiple inheritance
   - composition
