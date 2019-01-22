@@ -1,6 +1,24 @@
-Introduction To Object Oriented Programming: Teacher's Guide
+Introduction To Object Oriented Programming
 ===
-Lesson time: 60 minutes
+Lesson time: 60-75 minutes
+
+Table of Contents
+---
+[Audience](#audience)
+
+[Lesson Materials](#lesson-materials)
+
+[Overview](#overview)
+
+[Classes (15-20 minutes)](#classes)
+
+[Properties and Methods (20-30 minutes)](#properties-and-methods)
+
+[Exercise 1: Add a new method to the `Robot` class (10 minutes)](https://github.com/asciimo/trilogy/blob/master/oop.md#exercise-1-add-a-new-method-to-the-robot-class-10-minutes)
+
+[Exercise 2: Create a new class  (15 minutes)](https://github.com/asciimo/trilogy/blob/master/oop.md#exercise-2-create-a-new-class--15-minutes)
+
+[Topics for Further Learning](https://github.com/asciimo/trilogy/blob/master/oop.md#topics-for-further-learning)
 
 Audience
 ---
