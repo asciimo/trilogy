@@ -1,6 +1,6 @@
 Introduction To Object Oriented Programming
 ===
-Lesson time: 90 minutes
+Lesson time: 60 minutes
 
 Audience
 ---
@@ -24,9 +24,8 @@ programmers to model real-world objects in software, and enforce this idea by
 creating a class and **object instances** in a browser's JavaScript console. We
 will then explain how **properties** (variables) and **methods** (functions)
 give object instances their attributes and behavior. We'll cover the power of
-the special`constructor()` method, and the value of **accessors** to read and
-mutate object instance properties.
-
+the special`constructor()` method, and the value of **setter** and
+**getter** methods for writing and reading object instance properties.
 
 Classes
 ---
@@ -51,9 +50,9 @@ into the JavaScript console and execute it while understanding that this is just
 one implementation of an OOP interface.
 
 We will often refer to Object Oriented Programming as "OOP," for brevity. But
-you may want to says "Object Oriented Programming" to avoid confusion. 
+you may want to say "Object Oriented Programming" to avoid confusion. 
 
-### Teach to the students
+### Teach to the students (15-20 minutes)
 Object Oriented Programming (OOP) is a concept in software development that
 allows programmers to model real world objects. This paradigm is powerful
 because it allows humans to more easily manage complex software by leaning
@@ -74,7 +73,7 @@ completely different properties, but it will still be a class of object that
 humans recognize as "a pen." We can create an abstract model of this type of
 object using a class, and generalize all pen properties into categories. This
 table illustrates how we might  do this, where the first column is the abstract
-property, and the other two columns are concrete properties held by specific
+property, and the other two columns are concrete values held by specific
 instances of the class of object we know as "a pen:"
 
 | abstract property | pen 1      | pen 2      |
@@ -112,15 +111,14 @@ easier to talk about.
 Let's create a JavaScript class for an object that is becoming increasingly more
 familiar in our everyday lives: a robot. 
 
-Before we start, it's important to understand that Object Oriented Programming
+Before we start, it's important to understand that OOP 
 is a concept, or a *paradigm*, supported by most popular programming languages.
 Some languages, such as Java and C++ are built around this paradigm, while others
-such as Python and JavaScript support it, allowing you to freely mix and
-match OOP and procedural aspects as you see fit. In this lesson, we will use
+such as Python and JavaScript support it, but allow you to freely mix and
+match OOP and procedural features. In this lesson, we will use
 JavaScript because it's readily available in Web browsers and gives us instant
 feedback without having to compile or build anything. Just keep in mind that the
-concepts we'll cover are shared by all languages that support object oriented
-programming.
+concepts we'll cover are shared by all languages that support OOP.
 
 Let's look at the structure of an empty Robot class in JavaScript. Open the
 JavaScript console in a browser and enter the following:
@@ -147,7 +145,7 @@ memory:
 
 ![Robot class in the JavaScript console](img/1_robot_class_in_console.png)
 
-This is how the JavaScript interpreter in Firefox displays an class in memory.
+This is how the JavaScript interpreter in Firefox displays a class in memory.
 We can expand the arrows to drill down into the `Robot` "function," (JavaScript
 represents classes as functions, which we'll talk about in a moment), and we
 will quickly descend into a puzzling JavaScript rabbit hole. Let's not do that
@@ -184,15 +182,13 @@ added to every class, and it's the first function--in OOP terms, the first
 **method**--that gets called when we instantiate an object. We'll talk more
 about the usefulness of `constructor()` shortly.
 
-**[Timing: 11minutes]**
-
 Let's look at the subtle difference between the `Robot` class and the `marty`
 instance in the console:
 
 ![Robot class in the JavaScript console](img/2_robot_instance_in_console.png)
 
 The console identifies the `Robot` class as the JavaScript type `function`, but
-it identifies `marty` is the JavaScript type `Object`. If we expand `marty` by
+it identifies `marty` as the JavaScript type `Object`. If we expand `marty` by
 clicking on the arrow, we see that that he is empty. It will be our job to bring
 him to life with **properties** and **methods**.
 
@@ -209,7 +205,7 @@ At the end of this section, students will:
   - be able to override the default constructor to declare object properties
   - instantiate different **objects** from a class
   - call **methods** on an object instance.
-    - **accessor** methods for reading and writing property values on an object instance
+    - **getter** and **setter** methods for reading and writing property values on an object instance
     - arbitrary methods to define object behaviors 
 
 #### Tips
@@ -219,7 +215,7 @@ students that we are learning general concepts that apply to all
 OOP-friendly languages, and the particulars of JavaScript OOP can be explored
 on their own time.
 
-### Teach to the students
+### Teach to the students (20-30 minutes)
 
 *Attributes* such as name, color and size, are defined using variables called
 **properties**.
@@ -244,8 +240,6 @@ class Robot {
   }
 }
 ```
-
-@todo update screenshot to only show console interaction, not class definition
 
 ![Robot class in the JavaScript console](img/3_robot_name_property_in_console.png)
 
@@ -286,8 +280,6 @@ directly referencing the `name` property on the object instance using the dot
 operator:
 
 ![Robot class in the JavaScript console](img/4_robot_read_name_property_in_console.png)
-
-**[Timing: 16:35]**
 
 The console displays the value of the `name` property. It is the string, "Marty".
 
@@ -339,7 +331,8 @@ We can see that our new `Robot` instance is named Phyllis.
 
 Feel free to spend a minute creating more robots with different names!
 
-We can all agree that the most useful robots in the world do more than simply possess name.
+We can all agree that the most useful robots in the world do more than simply
+possess a name.
 
 ***Ask the class***
 > What are some other attributes that might belong to a robot?
@@ -347,9 +340,9 @@ We can all agree that the most useful robots in the world do more than simply po
     The sky's the limit on this one. Obvious properties include height, weight,
     speed, fuel, color, purpose, location, serial number...
 
-**[timing 19:15]**
-
-Let's add some of these properties to our `Robot` class. For now, we can hard-code the property values in the constructor as we initially did for `name` (don't forget to refresh your browser):
+Let's add some of these properties to our `Robot` class. For now, we can
+hard-code the property values in the constructor as we initially did for `name`.
+(Don't forget to refresh your browser):
 
 ```javascript
 class Robot {
@@ -375,14 +368,16 @@ Marty is really coming to life. And so is Phyllis:
 const phyllis = new Robot('Phyllis');
 ```
 
-![Robot class in the JavaScript console](img/7_robot_marty_with_properties_in_console.png)
+![Robot class in the JavaScript console](img/7_robot_phyllis_with_properties_in_console.png)
 
-As it stands, we can create an army of differently named blue, dancing robots. Awesome for sure, but still limiting.  What if we want a squad that sings?
+As it stands, we can create an army of differently named, blue, dancing robots.
+Awesome for sure, but limiting.  What if we want a squad of robots that sing?
 
 ***Ask the class***
 > How can we assign different values to these new properties when we instantiate a `Robot`? 
 
-    Students should be able to solve this problem by parameterizing the other attributes, as we did for `name`.
+    Students should be able to solve this problem by parameterizing the other attributes,
+    as we did for `name`.
 
 If we parameterize the new properties, our `constructor()` might look like this:
 
@@ -395,16 +390,35 @@ class Robot {
   }
 }
 ```
-Now we can create a rich multitude of robots with varying colors and purposes. But we will soon grow tired of this limited set of robot properties, and want to add more. We might add several dozen or even hundreds more properties. If we parameterize all of these properties in the constructor it will become unwieldy, as we will have to remember the order of arguments every time we instantiate a robot.
+Now we can create a rich multitude of robots with varying colors and purposes.
+But we will soon grow tired of this limited set of robot properties, and want to
+add more. We might add several dozen or even hundreds more properties. If we
+parameterize all of these properties in the constructor it will become unwieldy
+because we will have to remember the order of the arguments every time we
+instantiate a `Robot`.
 
-Furthermore, what if we want to modify a robot that already exists? Right now, we can't. We'd have to destroy it and create a new one with different properties. Fortunately, there is a way we can more gracefully provision each robot and even alter it after it has been instantiated.
+Furthermore, what if we want to modify a robot that already exists? Right now,
+we can't. We'd have to destroy it and create a new one with different
+properties. Fortunately, there is a way we can more gracefully provision each
+robot and even alter it after it has been instantiated.
 
-There is a type of method in OOP commonly called **accessors**, and sometimes called **setters** and **getters**. Their purpose is to read, assign, or change the properties of an object instance, after it has been instantiated. So far, we have only assigned values to properties at the time of instantiating using arguments passed to the constructor. With **accessors**, we can instantiate an object and then anytime afterward set or get its property values. There is nothing special about these methods, but they follow these conventions:
+There is a types of methods in OOP called **setters** and **getters** (some
+people call them **mutators** and **accessors**). Their purpose is to read,
+assign, or change the properties of an object instance after it has been
+instantiated. So far, we have only assigned values to properties at the time of
+instantiation using arguments passed to the constructor. With **setters** and
+**getters**, we can instantiate an object and then anytime afterward set or get
+its property values. There is nothing special about these methods, but they
+follow these conventions:
 
-  - An accessor that assigns or changes an object instance's property begins with `set`. For example, `setName()`.
-  - An accessor that reads an object instance's property begins with `get`. For example, `getName()`.
+  - A *setter**, which assigns or changes an object instance's property begins 
+    with `set`. For example, `setName()`.
+  - A *getter*,  which reads an object instance's property begins
+    with `get`. For example, `getName()`.
  
-Let's add an accessor to `Robot` that returns the `name` property. The syntax for declaring a method in a class is the same as creating a function anywhere in JavaScript, except that it is declared in the class body:
+Let's add a getter to `Robot` that returns the `name` property. The syntax for
+declaring a method in a class is the same as creating a function anywhere in
+JavaScript, except that it is declared in the class body:
 
 ```javascript
 class Robot {
@@ -428,27 +442,101 @@ marty.getName();
 
 ![Robot class in the JavaScript console](img/8_robot_marty_getName_in_console.png)
 
-Here we are able to call the `getName()` method on Marty by using the dot operator, just as we did when accessing `this` in `constructor()`. You may recall that when we first gave `Robot` a name property, we were able to read it directly from an object instance like this:
+Here we are able to call the `getName()` method on Marty by using the dot
+operator, just as we did when accessing `this` in `constructor()`. You may
+recall that when we first gave `Robot` a name property, we were able to read it
+directly from an object instance like this:
 
 ```javascript
 marty.name
 ```
 
 ***Ask the class***
-> Is it better to create a method to do this for us? 
+> Is it really better to create a method to do this for us? 
 
     It might be difficult to tease a "correct" answer out of students at this
     point, but it's worth getting their gears moving. Ideally, they will recognize
     that `getName()` is a first-class function, and that we can do whatever we want
     before returning the value of `this.name`, such as prefix the name with `Robot: `,
     ensure that the first letter is capitalized, or even load the value from a
-    database!
+    database.
 
-One benefit of using an accessor is that it can provide a predictable interface to the outside world without exposing its inner workings. For example, what if inside the `Robot` class we stored the value for a robot's name in some other property, like `robotName`? A programmer who instantiates a `Robot` object would not be able to guess this, and expect that when you want the name of an object instance, they would intuitively call `getName()`. As the author of the `Robot` class, you could document this **public** interface to the robot's name, but do anything you want inside the class to generate it. Users only need to know the name of the accessor 
+One benefit of using setters and getters is that they can provide a predictable,
+public interface to the outside world without exposing its private, inner
+workings. For example, what if inside the `Robot` class, we stored the value for
+a robot's name in some other property, like `robotName`? Or somewhere else
+completely, like in a database? A programmer who instantiates a `Robot` object
+should not have to look at the class source code to determine how to get
+the `Robot` instance's name. They should be able to intuitively call `getName()`
+and be done with it. As the author of the `Robot` class, you could document this
+public interface to the robot's name, and do anything you want inside the class to
+generate it. 
 
+Some OOP-compatible languages allow programmers to explicitly label properties
+and methods as **private** or **public**, to control access from the outside. If
+code tries to access or change a method or property marked private, the
+interpreter or compiler will throw an error. JavaScript does not provide this
+level of protection, or enforce any access control. We will make do by following
+the convention of using getters and setters to suggest the proper ways to 
+access our properties and methods.
 
+***Ask the class***
+> Why would you want to control how properties and methods are accessed and
+> called in your class?
     
+    Some good answers might include:
+      - To make sure users of the class don't call methods in unpredicatable
+        or dangerous ways.
+      - To ensure that property values are valid before returning them. 
+ 
+OK, that was a lot of talk about setters and getters. Now let's code some up.
+We'll move the remaining parameters to `Robot` from the constructor into setters
+and getters:
 
+```javascript
+class Robot {
+  constructor() {
+    this.name = '';
+    this.color = '';
+    this.purpose = '';
+  }
+
+  setName(name) {
+    this.name = name;
+  }
+
+  getName() {
+    return this.name;
+  }
+
+  setColor(color) {
+    this.color = color;
+  }
+
+  getColor() {
+    return this.color;
+  }
+
+  setPurpose(purpose) {
+    this.purpose = purpose;
+  }
+
+  getPurpose() {
+    return this.purpose;
+  }
+
+}
+```
+
+Even though we no longer pass property values as arguments to the `Robot`
+constructor, we will still initialize the properties to empty strings. This is
+another convention that helps document the properties defined in the class. Note
+that we could even set these to default values, rather than empty strings. 
+
+@todo: illustrate calling some of these new setters and getters
+@todo: make your own Robot! (10 minutes)
+@todo: homework: pick one or two real-world objects and create classes for them.
+Example, Fruit, Animal, Car, Athlete, Book, Game
 
 
 Backlog
