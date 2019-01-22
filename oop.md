@@ -1,4 +1,4 @@
-Introduction To Object Oriented Programming
+Introduction To Object Oriented Programming: Teacher's Guide
 ===
 Lesson time: 60 minutes
 
@@ -411,9 +411,9 @@ instantiation using arguments passed to the constructor. With **setters** and
 its property values. There is nothing special about these methods, but they
 follow these conventions:
 
-  - A *setter**, which assigns or changes an object instance's property begins 
+  - A *setter*, which assigns or changes an object instance's property, begins 
     with `set`. For example, `setName()`.
-  - A *getter*,  which reads an object instance's property begins
+  - A *getter*,  which reads an object instance's property, begins
     with `get`. For example, `getName()`.
  
 Let's add a getter to `Robot` that returns the `name` property. The syntax for
@@ -531,26 +531,43 @@ class Robot {
 Even though we no longer pass property values as arguments to the `Robot`
 constructor, we will still initialize the properties to empty strings. This is
 another convention that helps document the properties defined in the class. Note
-that we could even set these to default values, rather than empty strings. 
+that we could even set these to default values, rather than empty strings.
 
-@todo: illustrate calling some of these new setters and getters
-@todo: make your own Robot! (10 minutes)
-@todo: homework: pick one or two real-world objects and create classes for them.
-Example, Fruit, Animal, Car, Athlete, Book, Game
+Let's take these new setter and getter methods for a spin:
 
+![Robot class in the JavaScript console](img/9_robot_marty_setters_and_getters_in_console.png)
 
-Backlog
-===
+Let's take a look at how we can change Marty's color:
 
+![Robot class in the JavaScript console](img/10_robot_marty_set_color_in_console.png)
 
-***Ask the class***
-> Can you think of a real-world object that might be difficult to express using
-> a **class**? Which **properites** and **methods** seem difficult to model? 
+### Exercise 1: Add a new method to the `Robot` class (10 minutes)
+Using what we have learned about defining methods in a class, create a new
+`Robot` method, `doPurpose()`. 
+  - This method should call `console.log()` to announce what a `Robot` instance is currently doing.
+  - Marty, being an entertainment robot, should say "I'm dancing, I'm dancing!"
+  - Phyllis should be configured to be a computing robot, and say "I'm crunching
+    numbers."
+
+Hint: to pull this off, you will likely need to store the announcement text in a
+new property, and set it uniquely for each `Robot` instance.
+
+### Exercise 2: Create a new class  (15 minutes)
+Think of a real-world object that might be fun to model in a new class. For example: Fruit,
+Animal, Car, Athlete, Book, Game, Elevator.
+  - Define properties, setters, and getters
+  - Define at least two methods that perform a behavior associated with the
+    object.
+  - Make at least two instances of the object, and play around with their
+    properties and methods.
+
+***Ask the class*** (Time permitting)
+> Can you think of a real-world object that might be difficult to express in
+> OOP? What characteristics or behaviors seem challenging? 
 
     Try to model some of the students' suggestions with appropriate properties
-    and methods. Hopefully you will find an opportunity where some forthcoming
-    concepts will help, providing a segue into the next section.
-
+    and methods. Hopefully you will find an opportunity to describe some of the
+    advanced concepts under Topis for Further Learning that might help.
 
 Topics for further learning
 ---
