@@ -184,6 +184,8 @@ added to every class, and it's the first function--in OOP terms, the first
 **method**--that gets called when we instantiate an object. We'll talk more
 about the usefulness of `constructor()` shortly.
 
+**[Timing: 11minutes]**
+
 Let's look at the subtle difference between the `Robot` class and the `marty`
 instance in the console:
 
@@ -207,6 +209,8 @@ At the end of this section, students will:
   - be able to override the default constructor to declare object properties
   - instantiate different **objects** from a class
   - call **methods** on an object instance.
+    - **accessor** methods for reading and writing property values on an object instance
+    - arbitrary methods to define object behaviors 
 
 #### Tips
 While there are some JavaScript idiosyncrasies that can't be avoided while
@@ -283,6 +287,8 @@ operator:
 
 ![Robot class in the JavaScript console](img/4_robot_read_name_property_in_console.png)
 
+**[Timing: 16:35]**
+
 The console displays the value of the `name` property. It is the string, "Marty".
 
 ***Ask the class***
@@ -327,6 +333,8 @@ const phyllis = new Robot('Phyllis');
 
 We can see that our new `Robot` instance is named Phyllis.
 
+@todo redo screenshot with Phyllis
+
 ![Robot class in the JavaScript console](img/5_robot_read_name_phyllis_in_console.png)
 
 Feel free to spend a minute creating more robots with different names!
@@ -338,6 +346,8 @@ We can all agree that the most useful robots in the world do more than simply po
 
     The sky's the limit on this one. Obvious properties include height, weight,
     speed, fuel, color, purpose, location, serial number...
+
+**[timing 19:15]**
 
 Let's add some of these properties to our `Robot` class. For now, we can hard-code the property values in the constructor as we initially did for `name` (don't forget to refresh your browser):
 
@@ -372,7 +382,7 @@ As it stands, we can create an army of differently named blue, dancing robots. A
 ***Ask the class***
 > How can we assign different values to these new properties when we instantiate a `Robot`? 
 
-    Students should be able to solve this problem by paramaterizing the other attributes
+    Students should be able to solve this problem by parameterizing the other attributes, as we did for `name`.
 
 If we parameterize the new properties, our `constructor()` might look like this:
 
@@ -387,10 +397,55 @@ class Robot {
 ```
 Now we can create a rich multitude of robots with varying colors and purposes. But we will soon grow tired of this limited set of robot properties, and want to add more. We might add several dozen or even hundreds more properties. If we parameterize all of these properties in the constructor it will become unwieldy, as we will have to remember the order of arguments every time we instantiate a robot.
 
-Furthermore, what if we want to modify a robot that already exists? Right now, we can't. We'd have to destroy it and create a new one with different properties. Fortunately, there is a way we can more gracefully provision each robot and even alter it after it has been instantiated...
+Furthermore, what if we want to modify a robot that already exists? Right now, we can't. We'd have to destroy it and create a new one with different properties. Fortunately, there is a way we can more gracefully provision each robot and even alter it after it has been instantiated.
 
-Accessors aka "setters" and "getters"
----
+There is a type of method in OOP commonly called **accessors**, and sometimes called **setters** and **getters**. Their purpose is to read, assign, or change the properties of an object instance, after it has been instantiated. So far, we have only assigned values to properties at the time of instantiating using arguments passed to the constructor. With **accessors**, we can instantiate an object and then anytime afterward set or get its property values. There is nothing special about these methods, but they follow these conventions:
+
+  - An accessor that assigns or changes an object instance's property begins with `set`. For example, `setName()`.
+  - An accessor that reads an object instance's property begins with `get`. For example, `getName()`.
+ 
+Let's add an accessor to `Robot` that returns the `name` property. The syntax for declaring a method in a class is the same as creating a function anywhere in JavaScript, except that it is declared in the class body:
+
+```javascript
+class Robot {
+  constructor(name, color, purpose) {
+    this.name = name;
+    this.color = color;
+    this.purpose = purpose;
+  }
+  getName() {
+    return this.name;
+  }
+}
+```
+
+Now we can create a new Marty, and get his name using `getName()`:
+
+```javascript
+const marty = new Robot('Marty');
+marty.getName();
+```
+
+![Robot class in the JavaScript console](img/8_robot_marty_getName_in_console.png)
+
+Here we are able to call the `getName()` method on Marty by using the dot operator, just as we did when accessing `this` in `constructor()`. You may recall that when we first gave `Robot` a name property, we were able to read it directly from an object instance like this:
+
+```javascript
+marty.name
+```
+
+***Ask the class***
+> Is it better to create a method to do this for us? 
+
+    It might be difficult to tease a "correct" answer out of students at this
+    point, but it's worth getting their gears moving. Ideally, they will recognize
+    that `getName()` is a first-class function, and that we can do whatever we want
+    before returning the value of `this.name`, such as prefix the name with `Robot: `,
+    ensure that the first letter is capitalized, or even load the value from a
+    database!
+
+One benefit of using an accessor is that it can provide a predictable interface to the outside world without exposing its inner workings. For example, what if inside the `Robot` class we stored the value for a robot's name in some other property, like `robotName`? A programmer who instantiates a `Robot` object would not be able to guess this, and expect that when you want the name of an object instance, they would intuitively call `getName()`. As the author of the `Robot` class, you could document this **public** interface to the robot's name, but do anything you want inside the class to generate it. Users only need to know the name of the accessor 
+
 
     
 
